@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace ="com.nenu.dao.UserDao">
+	<resultMap type="com.nenu.domain.User" id="UserMap">
+		<result column="id" property="id"/>
+		<result column="name" property="name"/>
+	</resultMap>
+	
+	<parameterMap type="com.nenu.domain.User" id="User"/>
+	
+	<!-- 插入一条记录 -->
+	<insert id="insertUser" parameterMap="User" useGeneratedKeys="true" keyProperty="id">
+		insert into
+		tb_user(id,name)
+		values 
+		(#{id},#{name})
+	</insert>
+	<!-- 批量插入记录 -->
+	<insert id="batchInsertUser" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+		insert into
+		tb_user(id,name)
+		values 
+		<foreach collection="list" item="user" separator=",">
+		(#{user.id},#{user.name})
+		</foreach>
+		
+	</insert>
+	<update id="clearAllUser">
+		TRUNCATE table tb_user
+	</update>
+
+</mapper>
